@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<!-- 
+  Avinash Vadlamudi
+  CSC 313 - Programming Process
+  California
+ -->
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <title>OpenLayers example</title>
+  </head>
+  <body>
+    <h2>Cal Poly Friends</h2>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+
+      // Points of where peple live
+      var AvilaPoint = new ol.geom.Point(
+          ol.proj.transform([-120.699256, 35.171529], 'EPSG:4326', 'EPSG:3857')
+      );
+      var OxnardPoint = new ol.geom.Point(
+          ol.proj.transform([-119.701189, 34.418527], 'EPSG:4326', 'EPSG:3857')
+      );
+      var MontereyPoint = new ol.geom.Point(
+          ol.proj.transform([-121.890826, 36.595138], 'EPSG:4326', 'EPSG:3857')
+      );
+      // Features
+      var AvilaFeature = new ol.Feature(AvilaPoint);
+      var OxnardFeature = new ol.Feature(OxnardPoint);
+      var MontereyFeature = new ol.Feature(MontereyPoint);
+
+
+      // Source and vector layer
+      // Avila Details
+      var vectorAvilaSource = new ol.source.Vector({
+          projection: 'EPSG:4326',
+          features: [AvilaFeature]
+      });
+
+      var AvilaStyle = new ol.style.Style({
+          image: new ol.style.Circle({
+              fill: new ol.style.Fill({
+                  color: 'rgba(55, 200, 150, 0.5)'
+              }),
+              stroke: new ol.style.Stroke({
+                  width: 1,
+                  color: 'rgba(55, 200, 150, 0.8)'
+              }),
+              radius: 3
+          }),
+      });
+
+      var AvilaLayer = new ol.layer.Vector({
+          source: vectorAvilaSource,
+          style: AvilaStyle
+      });
+
+      // Oxnard Details
+      var vectorOxnardSource = new ol.source.Vector({
+          projection: 'EPSG:4326',
+          features: [OxnardFeature]
+      });
+
+      var OxnardStyle = new ol.style.Style({
+          image: new ol.style.Circle({
+              fill: new ol.style.Fill({
+                  color: 'rgba(255, 0, 0, 0.5)'
+              }),
+              stroke: new ol.style.Stroke({
+                  width: 1,
+                  color: 'rgba(255, 0, 0, 0.8)'
+              }),
+              radius: 6
+          }),
+      });
+
+      var OxnardLayer = new ol.layer.Vector({
+          source: vectorOxnardSource,
+          style: OxnardStyle
+      });
+
+      // Monterey Details
+      var vectorMontereySource = new ol.source.Vector({
+          projection: 'EPSG:4326',
+          features: [MontereyFeature]
+      });
+
+      var MontereyStyle = new ol.style.Style({
+          image: new ol.style.Circle({
+              fill: new ol.style.Fill({
+                  color: 'rgba(0, 0, 255, 0.5)'
+              }),
+              stroke: new ol.style.Stroke({
+                  width: 1,
+                  color: 'rgba(0, 0, 255, 0.8)'
+              }),
+              radius: 9
+          }),
+      });
+
+      var MontereyLayer = new ol.layer.Vector({
+          source: vectorMontereySource,
+          style: MontereyStyle
+      });
+
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }),
+          AvilaLayer,
+          OxnardLayer,
+          MontereyLayer
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([-120.65, 35.27]),
+          zoom: 7
+        })
+      });
+
+    </script>
+  </body>
+</html>
+
